@@ -1,0 +1,42 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-transaction-history
+      author: Kirill Zhdanov
+      changes:
+        - createTable:
+            tableName: transaction-history
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: amount
+                  type: integer
+                  constraints:
+                    nullable: false
+              - column:
+                  name: user_id
+                  type: bigint
+                  constraints:
+                    foreignKeyName: user_transaction_fk
+                    referencedTableName: users
+                    referencedColumnNames: id
+                    nullable: false
+              - column:
+                  name: project_id
+                  type: bigint
+                  constraints:
+                    foreignKeyName: project_transaction_fk
+                    referencedTableName: projects
+                    referencedColumnNames: id
+                    nullable: false
+              - column:
+                  name: time
+                  type: date
+                  defaultValueComputed: CURRENT_TIMESTAMP
+                  constraints:
+                    nullable: false
